@@ -1,0 +1,19 @@
+.header {
+  background-color: #354056;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.header>a {
+  color: lavender;
+  padding: 0 10px;
+}
+
+.Current {
+  color: brown;
+}

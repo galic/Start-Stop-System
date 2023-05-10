@@ -1,0 +1,21 @@
+.content {
+    /* min-height: 90vh; */
+    background-color: #dae3f3;
+}
+
+.item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: right;
+}
+
+.item:nth-child(odd) {
+    background-color: #c7d8f5;
+}
+
+.item>span {
+    padding-right: 10px;
+    /* padding-left: 10px; */
+    flex: 1;
+}
