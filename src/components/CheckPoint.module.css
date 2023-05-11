@@ -1,0 +1,39 @@
+.Input {
+    padding: 20px 10px;
+    font-size: 36px;
+    width: 100px;
+    border: 2px solid #9bbed6;
+    border-radius: 4px;
+    text-align: center;
+    color: crimson;
+}
+
+.Input:focus-visible {
+    outline-color: #2589d1;
+}
+
+.Button {
+    border-radius: 4px;
+    border: 2px solid #2589d1;
+    background-color: #2589d1;
+    color: #d3e3ed;
+    /* padding: 36px; */
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-left: 10px;
+    font-size: 24px;
+}
+
+.FormWrapper{
+    display: flex;
+    justify-content: center;
+}
+
+.LastCheck {
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}

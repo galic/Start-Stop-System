@@ -1,5 +1,6 @@
 import { Component, For, createEffect, createSignal, onMount } from "solid-js"
 import styles from './List.module.css';
+import { timestampToTime } from "../common/timeutils";
 
 type CheckPoint = {
   checkNum: number,
@@ -12,14 +13,14 @@ type ListItem = {
   checkpoints: CheckPoint[]
 }
 
-function timestampToTime(s: number): string {
-  const dtFormat = new Intl.DateTimeFormat('en-GB', {
-    timeStyle: 'medium',
-    timeZone: 'UTC'
-  });
+// function timestampToTime(s: number): string {
+//   const dtFormat = new Intl.DateTimeFormat('en-GB', {
+//     timeStyle: 'medium',
+//     timeZone: 'UTC'
+//   });
 
-  return dtFormat.format(new Date(s));
-}
+//   return dtFormat.format(new Date(s));
+// }
 
 //вывод контрольных точек
 const CheckPoint: Component<{ cp: CheckPoint }> = (props) => {
