@@ -1,6 +1,7 @@
 import { Component, For, createEffect, createSignal, onMount } from "solid-js"
 import styles from './List.module.css';
 import { timestampToTime } from "../common/timeutils";
+import { getList } from "../common/api";
 
 type CheckPoint = {
   checkNum: number,
@@ -35,8 +36,9 @@ const List: Component = () => {
   onMount(async () => {
     //load list from server
     //...
-    const result = await (await fetch('https://my-json-server.typicode.com/galic/db/protocol')).json()
-    console.log(result)
+    const result = await getList()
+    //const result = await (await fetch('https://my-json-server.typicode.com/galic/db/protocol')).json()
+    //console.log(result)
 
     setList(result)
   })
