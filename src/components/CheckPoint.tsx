@@ -1,59 +1,58 @@
-import { Accessor, Component, createEffect, createSignal, onMount } from "solid-js";
+import { Accessor, Component, For, createEffect, createSignal, onMount } from "solid-js";
 import styles from './CheckPoint.module.css'
-import { timestampToTime } from "../common/timeutils";
+import { formatTime } from "../common/timeutils";
+import { Checkpoint, addCheck, getLastCheckpoints } from "../common/api";
 
-type CheckPoint = {
-  id: number,
-  checkpoint: number,
-  time: number
-}
+const LastCheckInfo: Component<{ check: Accessor<Checkpoint[]> }> = (props) => {
 
-const LastCheckInfo: Component<{ check: Accessor<CheckPoint | null> }> = (props) => {
-
-  //console.log('LastCheckInfo', props.check())
-  //if (props.check() === null) return null
+  //const chk: Checkpoint | null = props.check()
 
   return (
     <div class={styles.LastCheck}>
-      <div>{(props.check() === null)?'not last checked info':'last checked'}</div>
-      <div>{props.check()?.id}</div>
-      <div>{timestampToTime(props.check()?.time)}</div>
+      <h6>{(props.check().length === 0) ? 'not last checked info' : 'last checked'}</h6>
+      <For each={props.check()}>{(checkpoint, index) =>
+        <div>
+          <span>{checkpoint.startingNumber}</span>
+          {' '}
+          <span>{formatTime(checkpoint.time.getTime())}</span>
+          {' '}
+          <button data-sn={checkpoint.id}>remove</button>
+        </div>
+      }
+      </For>
+
     </div>
   )
 }
 
 export const CheckPoint: Component<{ checkNum: number }> = (props) => {
   const [num, setNum] = createSignal("");
-  const [lastCheck, setLastCheck] = createSignal<CheckPoint | null>(null)
+  const [lastCheck, setLastCheck] = createSignal<Checkpoint[]>([])
+
   onMount(async () => {
     //get last checked number
-    const result = await (await fetch('https://my-json-server.typicode.com/galic/db/checkpoints')).json()
+    console.log('onmount')
+    const result = await getLastCheckpoints(props.checkNum, 2)
+    setLastCheck(result)
   })
 
   const handler = async () => {
 
     if (Number(num()) === 0) return;  //empty num() not valid
 
-    const data: CheckPoint = {
-      id: Number(num()),
-      checkpoint: props.checkNum,
-      time: Date.now()
+    const data: Checkpoint = {
+      startingNumber: Number(num()),
+      checkpointNumber: props.checkNum,
+      time: new Date()
     }
 
-    console.log(data)
+    console.log('post payload:',data)
 
-    const response = await fetch('https://my-json-server.typicode.com/galic/db/checkpoints', {
-      method: 'post',
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-    const result = await response.json()
-    console.log(result)
+    await addCheck(data)
+
     setNum('')  //clear input
-    setLastCheck(data)
+
+    setLastCheck([data])
   }
 
   createEffect(() => {

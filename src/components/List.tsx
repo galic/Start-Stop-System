@@ -1,47 +1,38 @@
 import { Component, For, createEffect, createSignal, onMount } from "solid-js"
 import styles from './List.module.css';
-import { timestampToTime } from "../common/timeutils";
-import { getList } from "../common/api";
-
-type CheckPoint = {
-  checkNum: number,
-  time: number
-}
-
-type ListItem = {
-  num: number;
-  name: string,
-  checkpoints: CheckPoint[]
-}
-
-// function timestampToTime(s: number): string {
-//   const dtFormat = new Intl.DateTimeFormat('en-GB', {
-//     timeStyle: 'medium',
-//     timeZone: 'UTC'
-//   });
-
-//   return dtFormat.format(new Date(s));
-// }
-
-//вывод контрольных точек
-const CheckPoint: Component<{ cp: CheckPoint }> = (props) => {
-  //console.log('cp=', props.cp)
-  if (props.cp === undefined) return <span></span>
-  return <span>{timestampToTime(props.cp.time)}</span>
-}
+import { formatTime, formatUTCTime } from "../common/timeutils";
+import { ProtocolItem, getList } from "../common/api";
 
 const List: Component = () => {
-  const [list, setList] = createSignal<ListItem[]>([])
+  const [list, setList] = createSignal<ProtocolItem[]>([])
 
   onMount(async () => {
-    //load list from server
-    //...
-    const result = await getList()
-    //const result = await (await fetch('https://my-json-server.typicode.com/galic/db/protocol')).json()
-    //console.log(result)
 
-    setList(result)
+    //load list from server
+    const result = await getList()
+
+    console.log(result)
+
+    let data: ProtocolItem[] = []
+    result.forEach(e => {
+      const item: ProtocolItem = {
+        startingNumber: e.startingNumber,
+        name: e.name,
+        startDate: e.startDate,
+        stopDate: e.stopDate,
+      }
+      data.push(item)
+    })
+
+    setList(data)
   })
+  // вывод разницы между двумя датами в формате чч:мм:сс
+  const result = (start: Date | null, stop: Date | null) => {
+    if (start && stop) {
+      return formatUTCTime(stop.getTime() - start.getTime())
+    }
+    return ''
+  }
 
   return (
     <>
@@ -50,11 +41,11 @@ const List: Component = () => {
         <For each={list()} fallback={<div>loading...</div>}>
           {item =>
             <div class={styles.item}>
-              <span>{item.num}</span>
+              <span>{item.startingNumber}</span>
               <span>{item.name}</span>
-              <CheckPoint cp={item.checkpoints[0]} />
-              <CheckPoint cp={item.checkpoints[1]} />
-              <span>{(item.checkpoints.length > 1) ? timestampToTime(item.checkpoints[1].time - item.checkpoints[0].time) : null}</span>
+              <span>{(item.startDate) ? formatTime(item.startDate.getTime()) : ''}</span>
+              <span>{(item.stopDate) ? formatTime(item.stopDate.getTime()) : ''}</span>
+              <span>{result(item.startDate, item.stopDate)}</span>
             </div>}
         </For>
       </div>

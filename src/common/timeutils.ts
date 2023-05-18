@@ -1,19 +1,18 @@
+const offset = (new Date()).getTimezoneOffset() * 60000 //offset in milliseconds
 
-//Convert unix timestamp to time string
-export function timestampToTime(s: number | undefined): string {
+const formatter = new Intl.DateTimeFormat('ru-RU', {
+    timeStyle: 'medium',
+    timeZone: 'UTC'
+});
 
-    if (s === undefined) return ''
-
-    //console.log('timestampToTime', s)
-    const offset = (new Date()).getTimezoneOffset() * 60000 //offset in milliseconds
-
-    console.log('timestampToTime offset', offset)
-
-    const dtFormat = new Intl.DateTimeFormat('en-GB', {
-        timeStyle: 'medium',
-        timeZone: 'UTC'
-    });
-
-    return dtFormat.format(new Date(s - offset));
+export function formatTime(s: number): string {
+    return formatter.format(new Date(s-offset));
 }
 
+export function formatUTCTime(s: number): string {
+    return formatter.format(new Date(s));
+}
+
+export function subtractDate(d1: Date, d2: Date): number {
+    return d1.getTime() - d2.getTime()
+}
