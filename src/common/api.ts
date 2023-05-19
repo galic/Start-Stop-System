@@ -20,6 +20,11 @@ export type Checkpoint = {
     time: Date
 }
 
+export type ApiResponse = {
+    result?: any,
+    error?: string
+}
+
 export async function getList(): Promise<ProtocolItem[]> {
 
     //new result
@@ -41,9 +46,9 @@ export async function getList(): Promise<ProtocolItem[]> {
     return data
 }
 
-export async function addCheck(checkpoint: Checkpoint): Promise<Checkpoint> {
+export async function addCheck(checkpoint: Checkpoint): Promise<ApiResponse> {
 
-    const result: Checkpoint = await api('http://localhost:8000/api/checkpoints', {
+    const result = await api('http://localhost:8000/api/checkpoints', {
         method: 'post',
         cache: "no-cache",
         headers: {
@@ -52,9 +57,12 @@ export async function addCheck(checkpoint: Checkpoint): Promise<Checkpoint> {
         body: JSON.stringify(checkpoint),
     })
 
-    console.log('addCheck from api', result)
-    result.time = new Date(result.time + 'Z')
-    console.log('addCheck result', result)
+    //console.log('addCheck from api', result)
+    //prepare dates
+    if (result.result)
+        result.result.time = new Date(result.result.time + 'Z')
+
+    //console.log('addCheck result', result)
 
     return result
 }
@@ -70,15 +78,33 @@ export async function getLastCheckpoints(checkpointNumber: number, limit: number
 // private funcs
 ///////////////////
 
-async function api(url: string, options = {}) {
+async function api(url: string, options = {}): Promise<ApiResponse> {
     const response = await fetch(url, options)
-    return response.json()
+    console.log('api', response)
+
+    if (response.ok) {
+        return { result: await response.json() }
+    }
+
+    if (response.status == 422) {
+        //validator error
+        const validateError = await response.json()
+        let sErr = ''
+        Object.keys(validateError).forEach((i) => {
+            const errArray = validateError[i]
+            sErr += errArray.join(',')
+        });
+        return { error: sErr }
+    }
+    //error 500 etc
+    return { error: response.statusText }
+
 }
 
 function prepareDates(arr: Checkpoint[]) {
 
-    arr.forEach(element=>{
-        element.time= new Date(element.time + 'Z')  //correct lumen API
+    arr.forEach(element => {
+        element.time = new Date(element.time + 'Z')  //correct lumen API
     })
 
 }

@@ -25,9 +25,16 @@ const LastCheckInfo: Component<{ check: Accessor<Checkpoint[]> }> = (props) => {
   )
 }
 
+const ShowError: Component<{ err: string }> = props => {
+  return (
+    <p class="error-box">{props.err}</p>
+  )
+}
+
 export const CheckPoint: Component<{ checkNum: number }> = (props) => {
   const [num, setNum] = createSignal("");
   const [lastCheck, setLastCheck] = createSignal<Checkpoint[]>([])
+  const [error, setError] = createSignal('')
 
   onMount(async () => {
     //get last checked number
@@ -46,13 +53,20 @@ export const CheckPoint: Component<{ checkNum: number }> = (props) => {
       time: new Date()
     }
 
-    console.log('post payload:',data)
+    console.log('post payload:', data)
 
-    await addCheck(data)
+    const result = await addCheck(data)
 
-    setNum('')  //clear input
+    if (result.ok) {
+      setNum('')    //clear input
+      setError('')  //clear error
+    }
+    else {
+      setError(result.error)
+    }
 
     setLastCheck([data])
+
   }
 
   createEffect(() => {
@@ -63,6 +77,7 @@ export const CheckPoint: Component<{ checkNum: number }> = (props) => {
     <div class="App">
       <h1>Checkpoint {props.checkNum}</h1>
       <LastCheckInfo check={lastCheck} />
+      <ShowError err={error()} />
       <div class={styles.FormWrapper}>
         <input
           class={styles.Input}
