@@ -1,4 +1,4 @@
-import { Component, For, createEffect, createSignal, onMount } from "solid-js"
+import { Component, For, createSignal, onMount } from "solid-js"
 import styles from './List.module.css';
 import { formatTime, formatUTCTime } from "../common/timeutils";
 import { ProtocolItem, getList } from "../common/api";

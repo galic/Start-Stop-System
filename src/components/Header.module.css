@@ -1,19 +1,28 @@
 .header {
   background-color: #354056;
-  min-height: 10vh;
-  display: flex;
+  /* min-height: 10vh; */
+  /* display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: white; */
 }
 
-.header>a {
+.wrapper {
+  padding: 1em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menuItem {
   color: lavender;
   padding: 0 10px;
+  text-decoration: none;
 }
 
 .Current {
-  color: brown;
+  color: #c56;
 }
