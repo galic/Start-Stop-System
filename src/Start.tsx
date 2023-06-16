@@ -6,7 +6,7 @@ const Start: Component = () => {
   return (
     <>
       <Header />
-      <CheckPoint checkNum={0} />
+      <CheckPoint checkNum={0} title="Старт" />
     </>
   );
 };

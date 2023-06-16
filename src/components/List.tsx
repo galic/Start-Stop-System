@@ -36,9 +36,9 @@ const List: Component = () => {
 
   return (
     <>
-      <h1>List</h1>
+      <h1>Список</h1>
       <div class={styles.content}>
-        <For each={list()} fallback={<div>loading...</div>}>
+        <For each={list()} fallback={<div>загрузка...</div>}>
           {item =>
             <div class={styles.item}>
               <span>{item.startingNumber}</span>

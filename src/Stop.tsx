@@ -6,7 +6,7 @@ export const Stop: Component = () => {
   return (
     <>
       <Header />
-      <CheckPoint checkNum={1} />
+      <CheckPoint checkNum={1} title='Стоп' />
     </>
   )
 };

@@ -1,4 +1,4 @@
-import { CheckPoint } from "../components/CheckPoint";
+//import { CheckPoint } from "../components/CheckPoint";
 
 export type ProtocolItem = {
     startingNumber: number;
@@ -68,10 +68,21 @@ export async function addCheck(checkpoint: Checkpoint): Promise<ApiResponse> {
 }
 
 export async function getLastCheckpoints(checkpointNumber: number, limit: number = 1): Promise<Checkpoint[]> {
-    const checkpoints: Checkpoint[] = await api(`http://localhost:8000/api/checkpoints?cn=${checkpointNumber}&limit=${limit}`)
+    const result = await api(`http://localhost:8000/api/checkpoints?cn=${checkpointNumber}&limit=${limit}`)
+    const checkpoints: Checkpoint[] = result.result
     prepareDates(checkpoints)
     console.log('getLastCheckpoints', checkpoints)
     return checkpoints
+}
+
+export async function delCheck(checkpointId: number): Promise<ApiResponse> {
+    return await api(`http://localhost:8000/api/checkpoints/${checkpointId}`, {
+        method: 'delete',
+        cache: "no-cache",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
 }
 
 //////////////////

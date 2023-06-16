@@ -24,16 +24,34 @@
     font-size: 24px;
 }
 
-.FormWrapper{
+.FormWrapper {
     display: flex;
     justify-content: center;
 }
-
-.LastCheck {
+.LastCheckContainer{
     border: 2px solid #ccc;
     border-radius: 4px;
     padding: 1rem;
     margin-bottom: 1rem;
     margin-left: 1rem;
     margin-right: 1rem;
+}
+
+.LastCheck {
+    margin-top: 5px;;
+}
+
+.RemoveBtn {
+    border: 2px solid #ccc;
+    padding: 10px 10px;
+}
+
+.StartingNumber {
+    display: inline-block;
+    width: 30px;
+    border: 2px solid #f55;
+    background-color: #fcc;
+    color: #333;
+    border-radius: 4px;
+    padding: 4px 10px;
 }
