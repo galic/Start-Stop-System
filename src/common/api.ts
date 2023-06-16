@@ -20,6 +20,11 @@ export type Checkpoint = {
     time: Date
 }
 
+export type GroupType = {
+    id: number;
+    name: string;
+};
+
 export type ApiResponse = {
     result?: any,
     error?: string
@@ -77,6 +82,33 @@ export async function getLastCheckpoints(checkpointNumber: number, limit: number
 
 export async function delCheck(checkpointId: number): Promise<ApiResponse> {
     return await api(`http://localhost:8000/api/checkpoints/${checkpointId}`, {
+        method: 'delete',
+        cache: "no-cache",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+}
+
+export async function getGroups(): Promise<ApiResponse> {
+    return await api('http://localhost:8000/api/groups')
+}
+
+export async function addGroup(name:string) {
+    return await api('http://localhost:8000/api/groups',{
+        method: 'post',
+        cache: "no-cache",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            name:name,
+        }),
+    })
+}
+
+export async function delGroup(id:number) {
+    return await api(`http://localhost:8000/api/groups/${id}`,{
         method: 'delete',
         cache: "no-cache",
         headers: {

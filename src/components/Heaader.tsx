@@ -10,10 +10,16 @@ const Menu: Component = () => {
         List
       </A> */}
       <A class={styles.menuItem} href="/start" activeClass={styles.Current}>
-        Start
+        Старт
       </A>
       <A class={styles.menuItem} href="/stop" activeClass={styles.Current}>
-        Stop
+        Финиш
+      </A>
+      <A class={styles.menuItem} href="/groups" activeClass={styles.Current}>
+        Группы
+      </A>
+      <A class={styles.menuItem} href="/athletes" activeClass={styles.Current}>
+        Спортсмены
       </A>
     </div>
   );
