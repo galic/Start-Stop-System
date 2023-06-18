@@ -41,14 +41,15 @@ const GroupList: Component = () => {
         <>
             <Header />
             <div class="container">
-                <h1>Groups</h1>
+                <h1>Группы</h1>
                 <For each={list()} fallback="загрузка...">
-                    {(group) => <div>
+                    {(group) => <div class="flex row beetween mt-1">
                         {group.name}
                         <button onclick={() => deleteItemHandler(group.id)}>удалить</button>
                     </div>}
                 </For>
-                <div>
+                <div class="mt-1">
+                    {/* <span>новая группа:</span> */}
                     <input onchange={(e) => inputHandler(e)} value={groupName()} />
                 </div>
             </div>

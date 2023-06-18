@@ -20,3 +20,17 @@ code {
   width: 90%;
   margin: 0 auto;
 }
+
+.flex{
+  display: flex;
+}
+.flex.row{
+  flex-direction: row;
+}
+.flex.beetween{
+  justify-content: space-between;
+}
+
+.mt-1{
+  margin-top: 1em;
+}
