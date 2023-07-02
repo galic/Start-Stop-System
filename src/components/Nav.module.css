@@ -1,0 +1,58 @@
+.navbar {
+    min-height: 3.25rem;
+}
+.navbar {
+    align-items: stretch;
+    display: flex;
+}
+
+.brand {
+    align-items: stretch;
+    display: flex;
+    flex-shrink: 0;
+    min-height: 3.25rem;
+}
+
+.item {
+    padding: 0.5em 0.75em;
+}
+a.item {
+    cursor: pointer;
+}
+.burger {
+    appearance: none;
+    background: 0 0;
+    border: none;
+    color: currentColor;
+    font-family: inherit;
+    font-size: 1em;
+    margin: 0;
+    padding: 0;
+}
+@media screen and (min-width: 769px) {
+    .burger {
+        display: none;
+    }
+}
+
+.burger span:first-child {
+    top: calc(50% - 6px);
+}
+.burger span:nth-child(2) {
+    top: calc(50% - 1px);
+}
+.burger span:nth-child(3) {
+    top: calc(50% + 4px);
+}
+.burger span {
+    background-color: currentColor;
+    display: block;
+    height: 1px;
+    left: calc(50% - 8px);
+    position: absolute;
+    transform-origin: center;
+    transition-duration: 86ms;
+    transition-property: background-color, opacity, transform;
+    transition-timing-function: ease-out;
+    width: 16px;
+}

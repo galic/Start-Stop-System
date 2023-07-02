@@ -1,5 +1,5 @@
 import { Component, For, createSignal, onMount } from "solid-js";
-import { Header } from "./components/Heaader";
+import { Header } from "./components/Header";
 //import { CheckPoint } from "./components/CheckPoint";
 import { addGroup, delGroup, getGroups, GroupType } from "./common/api";
 

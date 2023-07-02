@@ -6,7 +6,7 @@ import {
     createSignal,
     onMount,
 } from "solid-js";
-import { Header } from "./components/Heaader";
+import { Header } from "./components/Header";
 import {
     AtheleType,
     GroupType,

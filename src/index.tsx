@@ -11,6 +11,7 @@ const Start = lazy(() => import("./Start"));
 const Stop = lazy(() => import("./Stop"));
 const groupList = lazy(() => import("./GroupList"));
 const athleteList = lazy(() => import("./Athletes"));
+const massStart = lazy(() => import("./MassStart"));
 
 if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   throw new Error(
@@ -26,6 +27,7 @@ render(() => (
         <Route path="/stop" component={Stop} />
         <Route path="/groups" component={groupList} />
         <Route path="/athletes" component={athleteList} />
+        <Route path="/massstart" component={massStart} />
       </Routes>
   </Router>
 ), root!);
