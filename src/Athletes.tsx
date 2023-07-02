@@ -1,4 +1,11 @@
-import { Component, For, createEffect, createSignal, onMount } from "solid-js";
+import {
+    Component,
+    For,
+    createEffect,
+    createResource,
+    createSignal,
+    onMount,
+} from "solid-js";
 import { Header } from "./components/Heaader";
 import {
     AtheleType,
@@ -13,6 +20,8 @@ const Atheles: Component = () => {
     const [list, setList] = createSignal<AtheleType[]>([]);
     const [athleteName, setAthleteName] = createSignal<string>("");
     const [startingNumber, setStartingNumber] = createSignal<string>("");
+    const [groupId, setGroupId] = createSignal<string>("");
+    const [groups, setGroups] = createSignal<GroupType[]>([]);
 
     onMount(async () => {
         console.log("onmount athlete list");
@@ -20,6 +29,10 @@ const Atheles: Component = () => {
         if (!res.error) {
             setList(res.result);
         }
+
+        const groups = await getGroups();
+        console.log(groups.result);
+        setGroups(groups.result);
     });
 
     const deleteItemHandler = async (id: number) => {
@@ -36,7 +49,8 @@ const Atheles: Component = () => {
     const newAthleteHandler = async () => {
         const result = await addAthlete(
             athleteName(),
-            Number(startingNumber())
+            Number(startingNumber()),
+            Number(groupId())
         );
 
         if (!result.error) {
@@ -55,9 +69,16 @@ const Atheles: Component = () => {
                 <For each={list()} fallback="загрузка...">
                     {(athlete) => (
                         <div class="flex row beetween mt-1">
-                            <span>{athlete.startingNumber}</span>
-                            <span>{athlete.name}</span>
+                            <span
+                                class="i-block pr-1"
+                                style={{ width: "25px", "text-align": "right" }}
+                            >
+                                {athlete.startingNumber}
+                            </span>
+                            <span class="flex-1">{athlete.name}</span>
+                            <span class="flex-1">{athlete.group?.name}</span>
                             <button
+                                class="ml-1"
                                 onclick={() => deleteItemHandler(athlete.id)}
                             >
                                 удалить
@@ -65,18 +86,35 @@ const Atheles: Component = () => {
                         </div>
                     )}
                 </For>
-                <div class="mt-1">
-                    <input
-                        oninput={(e) => setAthleteName(e.target.value)}
-                        value={athleteName()}
-                    />
-                    <input
-                        oninput={(e) => setStartingNumber(e.target.value)}
-                        value={startingNumber()}
-                    />
-                    <select>
-                        {/* <For each={}></For> */}
-                    </select>
+                <div class="mt-1" style={{"background-color":"#ccc","padding":"1em"}}>
+                    <h6>Добавить участника</h6>
+                    <div class="flex mt-1">
+                        <label class="flex-1" for="statring-number">Номер</label>
+                        <input
+                            id="starting-number"
+                            oninput={(e) => setStartingNumber(e.target.value)}
+                            value={startingNumber()}
+                        />
+                    </div>
+                    <div class="flex mt-1">
+                        <label class="flex-1" for="name">Имя</label>
+                        <input
+                            id="name"
+                            oninput={(e) => setAthleteName(e.target.value)}
+                            value={athleteName()}
+                        />
+                    </div>
+                    <div class="flex mt-1">
+                        <label class="flex-1" for="group">Группа</label>
+                        <select class="flex-1" onchange={(e) => setGroupId(e.target.value)} id="group">
+                            <option>Выберите группу</option>
+                            <For each={groups()}>
+                                {(item, index) => (
+                                    <option value={item.id}>{item.name}</option>
+                                )}
+                            </For>
+                        </select>
+                    </div>
                     <button onclick={newAthleteHandler}>добавить</button>
                 </div>
             </div>

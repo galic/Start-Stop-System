@@ -1,36 +1,55 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
 }
 
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .container {
-  width: 90%;
-  margin: 0 auto;
+    width: 90%;
+    margin: 0 auto;
 }
 
-.flex{
-  display: flex;
+.flex {
+    display: flex;
 }
-.flex.row{
-  flex-direction: row;
+.flex.row {
+    flex-direction: row;
 }
-.flex.beetween{
-  justify-content: space-between;
+.flex.beetween {
+    justify-content: space-between;
 }
 
-.mt-1{
-  margin-top: 1em;
+.flex-1 {
+    flex: 1;
 }
+
+.mt-1 {
+    margin-top: .3em;
+}
+.ml-1{
+  margin-left: .3em;
+}
+.pl-1 {
+    padding-left: .3em;
+}
+.pr-1{
+  padding-right: .3em;
+}
+
+.i-block {
+    display: inline-block;
+}
+
+

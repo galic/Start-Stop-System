@@ -40,13 +40,16 @@ const List: Component = () => {
       <div class={styles.content}>
         <For each={list()} fallback={<div>загрузка...</div>}>
           {item =>
-            <div class={styles.item}>
-              <span>{item.startingNumber}</span>
-              <span>{item.name}</span>
-              <span>{(item.startDate) ? formatTime(item.startDate.getTime()) : ''}</span>
-              <span>{(item.stopDate) ? formatTime(item.stopDate.getTime()) : ''}</span>
-              <span>{result(item.startDate, item.stopDate)}</span>
-            </div>}
+            <>
+            {/* <div class={styles.item}> */}
+                <span>{item.startingNumber}</span>
+                <span class="flex-1">{item.name}</span>
+                <span>{(item.startDate) ? formatTime(item.startDate.getTime()) : ''}</span>
+                <span>{(item.stopDate) ? formatTime(item.stopDate.getTime()) : ''}</span>
+                <span>{result(item.startDate, item.stopDate)}</span>
+            {/* </div> */}
+            </>
+          }
         </For>
       </div>
     </>

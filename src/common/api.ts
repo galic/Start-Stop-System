@@ -1,13 +1,14 @@
 //import { CheckPoint } from "../components/CheckPoint";
 
 export type ProtocolItem = {
-    startingNumber: number;
     name?: string;
+    startingNumber: number;
     startDate: Date | null;
     stopDate: Date | null;
 };
 
 type ResultResponse = {
+    name?: string;
     startingNumber: number;
     startDate: string;
     stopDate: string;
@@ -30,6 +31,10 @@ export type AtheleType = {
     groupId: number;
     name: string;
     startingNumber: number;
+    group?: {
+        id: number;
+        name: string;
+    };
 };
 
 export type ApiResponse = {
@@ -51,6 +56,7 @@ export async function getList(): Promise<ProtocolItem[]> {
     result.forEach((r) => {
         data.push({
             startingNumber: r.startingNumber,
+            name:r.name,
             startDate: r.startDate ? new Date(r.startDate + "Z") : null, //lumen (API SSS) присылает дату в формате UTC без знака Z на конце, хотя дата приходет в зоне UTC
             stopDate: r.stopDate ? new Date(r.stopDate + "Z") : null,
         });
@@ -134,7 +140,11 @@ export async function getAthletes(): Promise<ApiResponse> {
     return await api("http://localhost:8000/api/athletes");
 }
 
-export async function addAthlete(name: string, startingNumber: number) {
+export async function addAthlete(
+    name: string,
+    startingNumber: number,
+    groupId: number
+) {
     return await api("http://localhost:8000/api/athletes", {
         method: "post",
         cache: "no-cache",
@@ -144,6 +154,7 @@ export async function addAthlete(name: string, startingNumber: number) {
         body: JSON.stringify({
             name: name,
             startingNumber: startingNumber,
+            groupId: groupId,
         }),
     });
 }
