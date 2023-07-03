@@ -8,15 +8,15 @@ export const Nav: ParentComponent = (props) => {
         <nav class={styles.navbar}>
             <div class={styles.brand}>
                 <A class={styles.item} href="/">
-                    <img src={logo} />
+                    <img src={logo} alt="logo"/>
                 </A>
-                <button class={styles.burger}>
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <button class={`${styles.burger} ${styles.isActive}`}>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
                 </button>
             </div>
-            {/* <div class={styles.navbarMenu}>{props.children}</div> */}
+            <div class={styles.navbarMenu}>{props.children}</div>
         </nav>
     );
 };

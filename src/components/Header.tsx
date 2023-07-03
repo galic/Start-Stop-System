@@ -59,7 +59,15 @@ export const Header: Component = () => {
                 <Menu />
             </nav>
             <Nav>
-                <Menu />
+                <div class="start">
+                    <A class="item" href="/start">Старт</A>
+                    <A class="item" href="/stop">Финиш</A>
+                </div>
+                <div class="end">
+                    <A class="item" href="/start">Группы</A>
+                    <A class="item" href="/stop">Участники</A>
+                    <A class="item" href="/massstart">Массстарт</A>
+                </div>
             </Nav>
         </header>
     );
